@@ -1,0 +1,11 @@
+https://www.civo.com/learn/gitops-using-helm3-and-flux-for-an-node-js-and-express-js-microservice
+
+
+kubectl apply -f https://raw.githubusercontent.com/fluxcd/helm-operator/master/deploy/crds.yaml
+
+  export USER="vsmuser1"
+  helm upgrade -i flux fluxcd/flux --wait \
+--namespace fluxcd \
+--set git.url=git@github.com:$USER/k8s-expressjs-flux.git
+
+helm repo add expressjs-k8s https://vsmuser1.github.io/expressjs-k8s/
