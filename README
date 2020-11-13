@@ -9,3 +9,4 @@ kubectl apply -f https://raw.githubusercontent.com/fluxcd/helm-operator/master/d
 --set git.url=git@github.com:$USER/k8s-expressjs-flux.git
 
 helm repo add expressjs-k8s https://vsmuser1.github.io/expressjs-k8s/
+fluxctl sync --k8s-fwd-ns fluxcd
