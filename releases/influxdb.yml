@@ -1,0 +1,20 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: influxdb
+  namespace: sre-pg
+  annotations:
+    fluxcd.io/automated: "true"
+    fluxcd.io/tag.chart-image: semver:~5.0
+    fluxcd.io/locked: "true"
+    fluxcd.io/locked_msg: "Halt updates for now"
+    fluxcd.io/locked_user: "Stefan Prodan <stefan@weave.works>"
+spec:
+  releaseName: influxdb
+  chart:
+    repository: https://influxdata.github.io/helmcharts
+    name: influxdb
+    version: 4.8.5
+    
+   
