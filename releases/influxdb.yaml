@@ -7,10 +7,20 @@ metadata:
 spec:
   releaseName: influxdb
   chart:
-    repository: https://influxdata.github.io/helmcharts
+    repository: https://influxdata.github.io/helm-charts
     name: influxdb
     version: 4.8.5
   values:
-    usePassword: true  
-    
-   
+    config:
+      http:
+        auth-enabled: true
+    setDefaultUser:  
+      enabled: true
+      activeDeadline: 600
+      backoffLimit: 10
+      user: 
+        existingSecret: influxdb-auth
+    env:
+      envFrom:
+      - secretRef: 
+          name: influxdb-auth
