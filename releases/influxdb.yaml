@@ -16,5 +16,7 @@ spec:
     repository: https://influxdata.github.io/helmcharts
     name: influxdb
     version: 4.8.5
+  values:
+    usePassword: true  
     
    
