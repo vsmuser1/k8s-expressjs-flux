@@ -4,23 +4,35 @@ kind: HelmRelease
 metadata:
   name: influxdb
   namespace: demo
+  annotations:
+    fluxcd.io/automated: "true"
+    fluxcd.io/tag.chart-image: semver:~5.0
+    fluxcd.io/locked: "true"
+    fluxcd.io/locked_msg: "Halt updates for now"
+    fluxcd.io/locked_user: "Stefan Prodan <stefan@weave.works>"
 spec:
   releaseName: influxdb
   chart:
-    repository: https://influxdata.github.io/helm-charts
+    repository: https://kubernetes-charts.storage.googleapis.com/
     name: influxdb
-    version: 4.8.5
+    version: 10.3.1
+  valueFileSecrets:
+    # the influxdb-auth secret contains the password value
+    - name: influxdb-auth
   values:
-    config:
-      http:
-        auth-enabled: true
-    setDefaultUser:  
-      enabled: true
-      activeDeadline: 600
-      backoffLimit: 10
-      user: 
-        existingSecret: influxdb-auth
-    env:
-      envFrom:
-      - secretRef: 
-          name: influxdb-auth
+    usePassword: true
+    image:
+      repository: bitnami/influxdb
+      tag: 1.8.3
+    service:
+      type: ClusterIP
+      port: 8086
+    cluster:
+      enabled: false
+    master:
+      securityContext:
+        enabled: false
+        fsGroup: 0
+        runAsUser: 0
+      persistence:
+        enabled: false

@@ -1,0 +1,32 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: influxdb
+  namespace: demo
+  annotations:
+    fluxcd.io/automated: "true"
+    fluxcd.io/tag.chart-image: semver:~5.0
+    fluxcd.io/locked: "true"
+    fluxcd.io/locked_msg: "Halt updates for now"
+    fluxcd.io/locked_user: "Stefan Prodan <stefan@weave.works>"
+spec:
+  releaseName: influxdb
+  chart:
+    repository: https://influxdata.github.io/helm-charts
+    name: influxdb
+    version: 4.8.5
+  values:
+    config:
+      http:
+        auth-enabled: true
+    setDefaultUser:  
+      enabled: true
+      activeDeadline: 600
+      backoffLimit: 10
+      user: 
+        existingSecret: influxdb-auth
+    env:
+      envFrom:
+      - secretRef: 
+          name: influxdb-auth

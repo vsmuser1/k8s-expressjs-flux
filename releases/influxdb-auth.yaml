@@ -1,13 +1,10 @@
 ---
+# This secret should be stored in Git encrypted
+# Sealed Secrets example: https://github.com/stefanprodan/gitops-helm#managing-kubernetes-secrets
 apiVersion: v1
 kind: Secret
 metadata:
-  name: influxdb-auth
+  name: redis-auth
   namespace: demo
-type: Opaque
-stringData:
-  INFLUXDB_DATABASE: "influxdb"
-  INFLUXDB_HOST: "influxdb"
-  INFLUXDB_HTTP_AUTH_ENABLED: "true"
-  INFLUXDB_PASSWORD: "password"
-  INFLUXDB_USERNAME: "sib"
+data:
+  values.yaml: cGFzc3dvcmQ6IGFkbWlu
